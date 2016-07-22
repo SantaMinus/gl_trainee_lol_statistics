@@ -2,7 +2,7 @@
 
 Used RIOT API: https://developer.riotgames.com/
 
-Used mikamai's gem 'ruby-lol': https://github.com/mikamai/ruby-lol
+Used [mokamai's gem 'ruby-lol'](https://github.com/mikamai/ruby-lol)
 
 Patch note
 ------
