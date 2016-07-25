@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Champion:</strong>
+  <%= @banned_champion.champion_id %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @banned_champion.team_id %>
+</p>
+
+<p>
+  <strong>Pick turn:</strong>
+  <%= @banned_champion.pick_turn %>
+</p>
+
+<%= link_to 'Edit', edit_banned_champion_path(@banned_champion) %> |
+<%= link_to 'Back', banned_champions_path %>

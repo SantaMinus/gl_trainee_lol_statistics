@@ -1,3 +1,4 @@
+# a player controller
 require 'lol'
 
 class PlayersController < ApplicationController
@@ -15,11 +16,10 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.json
   def show
-    id = params[:id]
-    @player = Player.find(id)
     client_connect(@player.region)
-    count_winrate(id)
-    count_KDA(id)
+    set_summoner_id unless @player.summoner_id
+    count_winrate
+    count_KDA
   end
 
   # GET /players/new
@@ -36,11 +36,12 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(player_params)
     client_connect
+    set_summoner_id
     count_winrate
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to @player, notice: 'Player was successfully created.' }
+        format.html { redirect_to @player, notice: 'Player was created.' }
         format.json { render :show, status: :created, location: @player }
       else
         format.html { render :new }
@@ -54,7 +55,7 @@ class PlayersController < ApplicationController
   def update
     respond_to do |format|
       if @player.update(player_params)
-        format.html { redirect_to @player, notice: 'Player was successfully updated.' }
+        format.html { redirect_to @player, notice: 'Player was updated.' }
         format.json { render :show, status: :ok, location: @player }
       else
         format.html { render :edit }
@@ -68,7 +69,7 @@ class PlayersController < ApplicationController
   def destroy
     @player.destroy
     respond_to do |format|
-      format.html { redirect_to players_url, notice: 'Player was successfully destroyed.' }
+      format.html { redirect_to players_url, notice: 'Player was destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -87,49 +88,39 @@ class PlayersController < ApplicationController
     def client_connect(*region)
       region = region.first if region
       region ||= player_params[:region]
-      @client = Lol::Client.new Player::API_KEY, {region: region}
+      @client = Lol::Client.new Player::API_KEY, { region: region }
     end
 
-    def count_winrate(*player_id)
-      player_id = player_id.first if player_id
+    def count_winrate
       summoner_id = @client.summoner.by_name(@player.name).first.id
       ranked_stats = @client.stats.ranked(summoner_id).champions
 
-      #@player.winrate = 0
-      #non_zero_modes = 0
-
-      #ranked_stats.each do |mode|
-      #  @player.winrate += mode.stats.total_sessions_won / mode.stats.total_sessions_played.to_f
-      #  non_zero_modes += 1 if mode.stats.total_sessions_played != 0
-      #end
-
-      #@player.winrate /= non_zero_modes
       @player.winrate = ranked_stats.last.stats.total_sessions_won / ranked_stats.last.stats.total_sessions_played.to_f
     end
 
-    def count_KDA(*player_id)
-      #binding.pry
-      player_id = player_id.first if player_id
-      summoner_id = @client.summoner.by_name(@player.name).first.id
-      games = @client.game.recent(summoner_id)
-      kda = 0
-      @player.kills = @player.deaths = @player.assists = 0
+    def count_KDA
+      games = @client.game.recent(@player.summoner_id)
+      @player.kda = 0
+      k = d = a = 0
+
       games.each do |g|
-        k = g.stats.champions_killed || 0
-        d = g.stats.num_deaths || 0
-        a = g.stats.assists || 0
-        @player.kills += k
-        @player.deaths += d
-        @player.assists += a
+        k += g.stats.champions_killed || 0
+        d += g.stats.num_deaths || 0
+        a += g.stats.assists || 0
       end
+
       len = games.count
-      @player.kills /= games.count
-      @player.deaths /= games.count
-      @player.assists /= games.count
-      @player.kda = (@player.kills + @player.assists) / @player.deaths
+      @player.kills = avg(k.to_f, len)
+      @player.deaths = avg(d.to_f, len)
+      @player.assists = avg(a.to_f, len)
+      @player.kda += (@player.kills + @player.assists) / @player.deaths
     end
 
-    def avg!(value, count)
-      value /= count
+    def avg(value, count)
+      value / count
+    end
+
+    def set_summoner_id
+      @player.summoner_id = @client.summoner.by_name(@player.name).first.id
     end
 end

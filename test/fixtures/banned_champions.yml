@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  champion_id: 1
+  team_id: 1
+  pick_turn: 1
+
+two:
+  champion_id: 1
+  team_id: 1
+  pick_turn: 1
