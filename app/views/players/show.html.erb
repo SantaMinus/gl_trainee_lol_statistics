@@ -16,5 +16,19 @@
   <%= @player.winrate %>
 </p>
 
+<p>
+  <strong>Recent KDA:</strong>
+  <%= @player.kda.round(2) %>
+  <br>
+  <strong>Kills:</strong>
+  <%= @player.kills %>
+  <br>
+  <strong>Deaths:</strong>
+  <%= @player.deaths %>
+  <br>
+  <strong>Assists:</strong>
+  <%= @player.assists %>
+</p>
+
 <%= link_to 'Edit', edit_player_path(@player) %> |
 <%= link_to 'Back', players_path %>

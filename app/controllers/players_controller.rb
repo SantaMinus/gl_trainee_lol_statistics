@@ -15,6 +15,11 @@ class PlayersController < ApplicationController
   # GET /players/1
   # GET /players/1.json
   def show
+    id = params[:id]
+    @player = Player.find(id)
+    client_connect(@player.region)
+    count_winrate(id)
+    count_KDA(id)
   end
 
   # GET /players/new
@@ -30,6 +35,8 @@ class PlayersController < ApplicationController
   # POST /players.json
   def create
     @player = Player.new(player_params)
+    client_connect
+    count_winrate
 
     respond_to do |format|
       if @player.save
@@ -77,11 +84,14 @@ class PlayersController < ApplicationController
       params.require(:player).permit(:name, :region)
     end
 
-    def client_connect
-      @client = Lol::Client.new Player::API_KEY, {region: player_params[:region]}
+    def client_connect(*region)
+      region = region.first if region
+      region ||= player_params[:region]
+      @client = Lol::Client.new Player::API_KEY, {region: region}
     end
 
-    def count_winrate
+    def count_winrate(*player_id)
+      player_id = player_id.first if player_id
       summoner_id = @client.summoner.by_name(@player.name).first.id
       ranked_stats = @client.stats.ranked(summoner_id).champions
 
@@ -95,5 +105,31 @@ class PlayersController < ApplicationController
 
       #@player.winrate /= non_zero_modes
       @player.winrate = ranked_stats.last.stats.total_sessions_won / ranked_stats.last.stats.total_sessions_played.to_f
+    end
+
+    def count_KDA(*player_id)
+      #binding.pry
+      player_id = player_id.first if player_id
+      summoner_id = @client.summoner.by_name(@player.name).first.id
+      games = @client.game.recent(summoner_id)
+      kda = 0
+      @player.kills = @player.deaths = @player.assists = 0
+      games.each do |g|
+        k = g.stats.champions_killed || 0
+        d = g.stats.num_deaths || 0
+        a = g.stats.assists || 0
+        @player.kills += k
+        @player.deaths += d
+        @player.assists += a
+      end
+      len = games.count
+      @player.kills /= games.count
+      @player.deaths /= games.count
+      @player.assists /= games.count
+      @player.kda = (@player.kills + @player.assists) / @player.deaths
+    end
+
+    def avg!(value, count)
+      value /= count
     end
 end
