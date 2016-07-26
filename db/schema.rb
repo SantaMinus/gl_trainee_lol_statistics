@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725131349) do
+ActiveRecord::Schema.define(version: 20160726140827) do
 
   create_table "banned_champions", force: :cascade do |t|
     t.integer  "champion_id"
@@ -27,18 +27,25 @@ ActiveRecord::Schema.define(version: 20160725131349) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "participants", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "game_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "region"
     t.decimal  "winrate"
     t.decimal  "kills"
     t.decimal  "deaths"
     t.decimal  "assists"
     t.decimal  "kda"
-    t.integer  "current_game_id"
+    t.integer  "game_id"
     t.integer  "summoner_id"
+    t.integer  "users_id"
+    t.index ["users_id"], name: "index_players_on_users_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,6 +54,8 @@ ActiveRecord::Schema.define(version: 20160725131349) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "email"
+    t.integer  "players_id"
+    t.index ["players_id"], name: "index_users_on_players_id"
   end
 
 end

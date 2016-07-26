@@ -10,18 +10,19 @@
       </ul>
     </div>
   <% end %>
+  <table class="table table-stiped">
+    <tr class="field">
+      <td><%= f.label :name %></td>
+      <td><%= f.text_field :name %></td>
+    </tr>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+    <tr class="field">
+      <td><%= f.label :region %></td>
+      <td><%= f.select(:region, options_for_select([['Russia', "ru"], ['Europe Nordic & East', 'eun'], ['EUW', 'euw'], ['North America', 'na']])) %></td>
+    </tr>
 
-  <div class="field">
-    <%= f.label :region %>
-    <%= f.select(:region, options_for_select([['Russia', "ru"], ['Europe Nordic & East', 'eune'], ['EUW', 'euw'], ['North America', 'na']])) %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <tr class="actions">
+      <%= f.submit %>
+    </tr>
+  </table>
 <% end %>

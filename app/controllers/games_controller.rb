@@ -80,5 +80,12 @@ class GamesController < ApplicationController
 
     def get_platform_id
       platforms = ['BR1', 'EUN1', 'EUW1', 'JP1', 'KR', 'LA1', 'LA2', 'NA1', 'OC1', 'PBE1', 'RU', 'TR1']
+      case region
+      when 'br', 'eun', 'euw', 'jp', 'na', 'oc', 'pbe', 'tr'
+        region.upcase! << "1"
+      else
+        region.upcase!
+      end
+        
     end
 end
