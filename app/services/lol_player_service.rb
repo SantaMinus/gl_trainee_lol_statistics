@@ -8,7 +8,7 @@ class LolPlayerService
   def client_connect(*region)
     region = region.first if region
     region ||= player_params[:region]
-    @client = Lol::Client.new(Player::API_KEY, { region: region })
+    @client = Lol::Client.new(Player::API_KEY, region: region)
   end
 
   def set_summoner_id
@@ -44,9 +44,9 @@ class LolPlayerService
     value / count
   end
 
-  def get_statistics(player)
+  def get_statistics(player, new_player=true)
     @player = player
-    client_connect(@player.region)
+    client_connect(@player.region) if new_player
     set_summoner_id
     count_winrate
     count_kda

@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th><%= @player.name %>'s statistics</th>
-      <th colspan="3"></th>
+      <th><%= link_to 'Live game', game_path(@player) %><button type="button" class="btn btn-info" disabled="disabled">Live game</button></th>
     </tr>
   </thead>
 
@@ -40,5 +40,9 @@
   </tr>
 </table>
 
-<%= link_to 'Edit', edit_player_path(@player) %> |
+<%= link_to 'Update', players_path(@player) %> |
 <%= link_to 'Back', players_path %>
+
+<button type="button" class="btn btn-info" disabled="disabled">
+  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update statistics
+</button>

@@ -2,17 +2,14 @@
 require 'lol'
 
 class PlayersController < ApplicationController
-  before_filter :authorize
-  
   before_action :set_player, only: [:show, :edit, :update, :destroy]
-  before_action :set_service
+  before_action :set_service, except: [:index, :new, :destroy]
 
   def index
     @players = Player.all
   end
 
   def show
-    @service.get_statistics(@player)
   end
 
   def new
@@ -24,8 +21,8 @@ class PlayersController < ApplicationController
 
   def create
     @player = Player.new(player_params)
-    @service.get_statistics(@player)
-
+    @player_service.get_statistics(@player, true)
+    
     respond_to do |format|
       if @player.save
         format.html { redirect_to @player, notice: 'Player was created.' }
@@ -38,15 +35,8 @@ class PlayersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @player.update(player_params)
-        format.html { redirect_to @player, notice: 'Player was updated.' }
-        format.json { render :show, status: :ok, location: @player }
-      else
-        format.html { render :edit }
-        format.json { render json: @player.errors, status: :unprocessable_entity }
-      end
-    end
+    binding.pry
+    @player_service.get_statistics(@player, true)
   end
 
   def destroy
@@ -67,6 +57,6 @@ class PlayersController < ApplicationController
     end
 
     def set_service
-      @service = LolPlayerService.new(@player)
+      @player_service = LolPlayerService.new(@player)
     end
 end
