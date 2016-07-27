@@ -10,6 +10,7 @@ class PlayersController < ApplicationController
   end
 
   def show
+    @player_service.get_statistics(@player, true) if @player.kda == nil
   end
 
   def new
@@ -35,7 +36,6 @@ class PlayersController < ApplicationController
   end
 
   def update
-    binding.pry
     @player_service.get_statistics(@player, true)
   end
 

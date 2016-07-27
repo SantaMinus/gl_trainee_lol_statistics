@@ -15,3 +15,5 @@ v0.2.1 - Update player_controller methods to look better.
 v0.2.2 - Refactored player\_controller, added lol\_player_service, added Bootstrap
 
 v0.2.3 - Cleaned up structure a bit
+
+v0.3.0 - Added current game basic statistics

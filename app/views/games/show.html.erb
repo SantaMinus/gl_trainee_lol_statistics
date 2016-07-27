@@ -1,2 +1,55 @@
-<h1>Games#show</h1>
-<p>Find me in app/views/games/show.html.erb</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= @player.name %>'s current game</th>
+      <th><%= link_to 'Live game', game_path(@player) %><button type="button" class="btn btn-info" disabled="disabled">Live game</button></th>
+    </tr>
+  </thead>
+
+  <tr>
+    <td><strong>Mode:</strong></td>
+    <td><%= @game.mode %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Start time:</strong></td>
+    <td><%= @game.start_time %></td>
+  </tr>
+
+  <tr>
+    <th>Team 1</th>
+    <th>Team 2</th>
+  </tr>
+  <tr>
+    <td><%= @player.region %></td>
+    <td><%= @player.region %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Win Rate:</strong></td>
+    <td><%= @player.winrate.round(2) %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Recent KDA:</strong></td>
+    <td><%= @player.kda.round(2) %></td>
+  <tr>
+    <td><strong>Kills:</strong></td>
+    <td><%= @player.kills %></td>
+  </tr>
+  <tr>
+    <td><strong>Deaths:</strong></td>
+    <td><%= @player.deaths %></td>
+  </tr>
+  <tr>
+    <td><strong>Assists:</strong></td>
+    <td><%= @player.assists %></td>
+  </tr>
+</table>
+
+<%= link_to 'Update', player_path(@player) %> |
+<%= link_to 'Back', players_path %>
+
+<button type="button" class="btn btn-info" disabled="disabled">
+  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update statistics
+</button>
