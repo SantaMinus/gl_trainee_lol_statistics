@@ -38,7 +38,8 @@
   </tr>
 </table>
 
-<%= link_to 'Update', player_path(@player) %> |
+<%= link_to "Update", :controller => :players, :action => :update, :type => '1', :html => { :class => "btn" } %> |
+<%= link_to 'Update', update_player_path(@player) %> |
 <%= link_to 'Back', players_path %>
 
 <button type="button" class="btn btn-info" disabled="disabled">

@@ -23,8 +23,7 @@ class LolPlayerService
 
   def count_kda
     games = @client.game.recent(@player.summoner_id)
-    @player.kda = 0
-    k = d = a = 0
+    @player.kda = k = d = a = 0
 
     games.each do |g|
       k += g.stats.champions_killed || 0

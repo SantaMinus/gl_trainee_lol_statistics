@@ -2,7 +2,6 @@
   <thead>
     <tr>
       <th><%= @player.name %>'s current game</th>
-      <th><%= link_to 'Live game', game_path(@player) %><button type="button" class="btn btn-info" disabled="disabled">Live game</button></th>
     </tr>
   </thead>
 
@@ -21,35 +20,40 @@
     <th>Team 2</th>
   </tr>
   <tr>
-    <td><%= @player.region %></td>
-    <td><%= @player.region %></td>
+    <td><%= @game.participants[0].player.name %></td>
+    <td><%= @game.participants[5].player.name %></td>
   </tr>
 
   <tr>
-    <td><strong>Win Rate:</strong></td>
-    <td><%= @player.winrate.round(2) %></td>
+    <td><%= @game.participants[1].player.name %></td>
+    <td><%= @game.participants[6].player.name %></td>
   </tr>
 
   <tr>
-    <td><strong>Recent KDA:</strong></td>
-    <td><%= @player.kda.round(2) %></td>
+    <td><%= @game.participants[2].player.name %></td>
+    <td><%= @game.participants[7].player.name %></td>
   <tr>
-    <td><strong>Kills:</strong></td>
-    <td><%= @player.kills %></td>
+    <td><%= @game.participants[3].player.name %></td>
+    <td><%= @game.participants[8].player.name %></td>
   </tr>
   <tr>
-    <td><strong>Deaths:</strong></td>
-    <td><%= @player.deaths %></td>
+    <td><%= @game.participants[4].player.name %></td>
+    <td><%= @game.participants[9].player.name %></td>
   </tr>
   <tr>
-    <td><strong>Assists:</strong></td>
-    <td><%= @player.assists %></td>
+    <th>Winrate</th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><%= @team1_winrate.round(2) %></td>
+    <td><%= @team2_winrate.round(2) %></td>
+  </tr>
+  <tr class="prediction">
+    <th>Team <%= @game.winner %> is likely to win with a chance of <%= @game.result.round(2) * 100 %>%</th>
+    <th></th>
   </tr>
 </table>
 
-<%= link_to 'Update', player_path(@player) %> |
+<div class="btn-group">
 <%= link_to 'Back', players_path %>
-
-<button type="button" class="btn btn-info" disabled="disabled">
-  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update statistics
-</button>
+</div>
