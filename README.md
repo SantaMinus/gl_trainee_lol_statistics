@@ -19,3 +19,5 @@ v0.2.3 - Cleaned up structure a bit
 v0.3.0 - Added current game basic statistics
 
 v0.4.0 - Added a simple prediction of current game result
+
+v0.4.1 - Modified routes and styles
