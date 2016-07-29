@@ -30,7 +30,7 @@ class GamesController < ApplicationController
     begin
       @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
     rescue
-      render :not_found
+      render :game_not_found
     else
       @start_time = Time.at(@game_info.game_start_time).to_datetime
 

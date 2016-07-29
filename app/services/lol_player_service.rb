@@ -12,7 +12,9 @@ class LolPlayerService
   end
 
   def set_summoner_id
-    @player.summoner_id = @client.summoner.by_name(@player.name).first.id
+    @player.summoner_id ||= @client.summoner.by_name(@player.name).first.id
+    rescue
+      # show summoner_not_found somehow
   end
 
   def count_winrate
