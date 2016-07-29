@@ -1,59 +1,59 @@
-<table class="table table-striped">
-  <thead>
+<div class="content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= @player.name %>'s current game</th>
+      </tr>
+    </thead>
+
     <tr>
-      <th><%= @player.name %>'s current game</th>
+      <td><strong>Mode:</strong></td>
+      <td><%= @game.mode %></td>
     </tr>
-  </thead>
 
-  <tr>
-    <td><strong>Mode:</strong></td>
-    <td><%= @game.mode %></td>
-  </tr>
+    <tr>
+      <td><strong>Start time:</strong></td>
+      <td><%= @game.start_time %></td>
+    </tr>
 
-  <tr>
-    <td><strong>Start time:</strong></td>
-    <td><%= @game.start_time %></td>
-  </tr>
+    <tr>
+      <th>Team 1</th>
+      <th>Team 2</th>
+    </tr>
+    <tr>
+      <td><%= @game.participants[0].player.name %></td>
+      <td><%= @game.participants[5].player.name %></td>
+    </tr>
+    <tr>
+      <td><%= @game.participants[1].player.name %></td>
+      <td><%= @game.participants[6].player.name %></td>
+    </tr>
+    <tr>
+      <td><%= @game.participants[2].player.name %></td>
+      <td><%= @game.participants[7].player.name %></td>
+    <tr>
+      <td><%= @game.participants[3].player.name %></td>
+      <td><%= @game.participants[8].player.name %></td>
+    </tr>
+    <tr>
+      <td><%= @game.participants[4].player.name %></td>
+      <td><%= @game.participants[9].player.name %></td>
+    </tr>
+    <tr>
+      <th>Winrate</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><%= @team1_winrate.round(2) %></td>
+      <td><%= @team2_winrate.round(2) %></td>
+    </tr>
+    <tr class="prediction">
+      <th>Team <%= @game.winner %> is likely to win with a chance of <%= @game.result.round(2) %>%</th>
+      <th></th>
+    </tr>
+  </table>
 
-  <tr>
-    <th>Team 1</th>
-    <th>Team 2</th>
-  </tr>
-  <tr>
-    <td><%= @game.participants[0].player.name %></td>
-    <td><%= @game.participants[5].player.name %></td>
-  </tr>
-
-  <tr>
-    <td><%= @game.participants[1].player.name %></td>
-    <td><%= @game.participants[6].player.name %></td>
-  </tr>
-
-  <tr>
-    <td><%= @game.participants[2].player.name %></td>
-    <td><%= @game.participants[7].player.name %></td>
-  <tr>
-    <td><%= @game.participants[3].player.name %></td>
-    <td><%= @game.participants[8].player.name %></td>
-  </tr>
-  <tr>
-    <td><%= @game.participants[4].player.name %></td>
-    <td><%= @game.participants[9].player.name %></td>
-  </tr>
-  <tr>
-    <th>Winrate</th>
-    <th></th>
-  </tr>
-  <tr>
-    <td><%= @team1_winrate.round(2) %></td>
-    <td><%= @team2_winrate.round(2) %></td>
-  </tr>
-  <tr class="prediction">
-    <th>Team <%= @game.winner %> is likely to win with a chance of <%= @game.result.round(2) * 100 %>%</th>
-    <th></th>
-  </tr>
-</table>
-
-<div class="btn-group">
-<%= link_to 'Back', players_path %>
+  <div class="btn-group">
+  <%= link_to 'Back', players_path %>
+  </div>
 </div>

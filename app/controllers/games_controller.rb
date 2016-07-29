@@ -29,6 +29,9 @@ class GamesController < ApplicationController
     @game_request = Lol::CurrentGameRequest.new(Player::API_KEY, @player.region)
     begin
       @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
+    rescue
+      render :not_found
+    else
       @start_time = Time.at(@game_info.game_start_time).to_datetime
 
       if Game.exists?(start_time: @start_time)
@@ -37,8 +40,6 @@ class GamesController < ApplicationController
         create
       end
       predict_victory
-    rescue
-      render :not_found
     end
   end
 
@@ -55,19 +56,18 @@ class GamesController < ApplicationController
       @game_info.participants.each_with_index do |participant, index|
         player = Player.find_by(name: participant.summoner_name)
         @player_service.get_statistics(player) if player.winrate == nil
-        player_winrate = player.winrate
 
         case index
         when 0..4
-          @team1_winrate += player_winrate
+          @team1_winrate += player.winrate
         when 5..9
-          @team2_winrate += player_winrate
+          @team2_winrate += player.winrate
         end
       end
       @team1_winrate /= 5.0
       @team2_winrate /= 5.0
-      @game.result = (@team1_winrate + @team2_winrate) / 2
-      @game.winner = @team1_winrate > @team2_winrate ? 1 : 2
+      @game.result ||= [@team1_winrate, @team2_winrate].max * 100 / (@team1_winrate + @team2_winrate)
+      @game.winner ||= @team1_winrate > @team2_winrate ? 1 : 2
       @game.save
     end
 end

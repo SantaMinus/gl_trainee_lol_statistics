@@ -4,14 +4,22 @@
     <title>About</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <div class="jumbotron">
-      <h1>Hello summoner!</h1>
-      <p>This is a fan-made application designed for you to see the match result prediction. <br>For every game currently taking place, you will see the estimated probability of win for one or another team.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    <div class="outer jumbotron">
+      <div class="middle">
+        <div class="inner">
+
+          <h1>Hello summoner!</h1>
+
+          <p>This is a fan-made application designed for you to see the match result prediction. <br>For every game currently taking place, you will see the estimated probability of win for one or another team.</p>
+          <!--p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+          <%= button_to('Create player', new_player_path)  %><comment -->
+          <%= link_to 'New Player', new_player_path %>
+        </div>
+      </div>
     </div>
-    <%= link_to 'New Player', new_player_path %>
   </body>
 </html>
 

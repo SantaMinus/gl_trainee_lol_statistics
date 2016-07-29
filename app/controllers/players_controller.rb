@@ -18,7 +18,6 @@ class PlayersController < ApplicationController
   end
 
   def edit
-    update
   end
 
   def create
@@ -42,8 +41,8 @@ class PlayersController < ApplicationController
 
   def update
     @player_service.get_statistics(@player, true)
-    binding.pry
     @player.save
+    render :show
   end
 
   def destroy

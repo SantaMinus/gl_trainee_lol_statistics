@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped players-show">
   <thead>
     <tr>
       <th><%= @player.name %>'s statistics</th>
@@ -39,9 +39,7 @@
 </table>
 
 <%= link_to "Update", :controller => :players, :action => :update, :type => '1', :html => { :class => "btn" } %> |
-<%= link_to 'Update', update_player_path(@player) %> |
-<%= link_to 'Back', players_path %>
+<%= link_to 'Back', players_path %> |
+<%= link_to 'Destroy', @player, method: :delete, data: { confirm: 'Are you sure?' } %>
 
-<button type="button" class="btn btn-info" disabled="disabled">
-  <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Update statistics
-</button>
+<%= button_to('Update statistics', :action => :update,:class => 'btn btn-info')  %>

@@ -3,12 +3,9 @@ Rails.application.routes.draw do
   get 'games/show'
 
   get "/pages/:page" => "pages#show"
-
-  resources :banned_champions
+  get "player/:id/update" => "players#update", :as => :update_player
   resources :games
   resources :players
 
-  root 'players#index'
-  #root "pages#show", page: "home"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root "pages#show", page: "home"
 end
