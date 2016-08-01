@@ -14,7 +14,7 @@ class LolPlayerService
   def set_summoner_id
     @player.summoner_id ||= @client.summoner.by_name(@player.name).first.id
     rescue
-      # show summoner_not_found somehow
+      #flash.now[:error] = "The summoner with such name doesn't exist. Please double check the summoner's name or a region."
   end
 
   def count_winrate
