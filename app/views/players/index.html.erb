@@ -9,6 +9,7 @@
             <th>Name</th>
             <th>Winrate</th>
             <th>KDA</th>
+            <th>Skill points</th>
           </tr>
         </thead>
 
@@ -18,6 +19,7 @@
               <td><%= link_to player.name, player %></td>
               <td><%= player.winrate.round(2) if player.winrate %></td>
               <td><%= player.kda.round(2) if player.kda%></td>
+              <td><%= player.skill_points %></td>
             </tr>
           <% end %>
         </tbody>

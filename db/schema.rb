@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728134835) do
+ActiveRecord::Schema.define(version: 20160801093238) do
 
   create_table "banned_champions", force: :cascade do |t|
     t.integer  "champion_id"
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20160728134835) do
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "region"
     t.decimal  "winrate"
     t.decimal  "kills"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160728134835) do
     t.decimal  "assists"
     t.decimal  "kda"
     t.integer  "summoner_id"
+    t.integer  "skill_points"
   end
 
 end

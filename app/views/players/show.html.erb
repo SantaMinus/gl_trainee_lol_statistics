@@ -36,6 +36,10 @@
     <td><strong>Assists:</strong></td>
     <td><%= @player.assists %></td>
   </tr>
+  <tr>
+    <td><strong>Skill points:</strong></td>
+    <td><%= @player.skill_points %></td>
+  </tr>
 </table>
 
 <%= link_to "Update", :controller => :players, :action => :update, :type => '1', :html => { :class => "btn" } %> |

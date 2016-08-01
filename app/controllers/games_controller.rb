@@ -51,8 +51,9 @@ class GamesController < ApplicationController
     end
 
     def predict_victory
+      #p = Player.find(params[:id])
       @player_service = LolPlayerService.new(@player)
-      @team1_winrate = @team2_winrate = 0.0
+      @team1_winrate = @team2_winrate = @team1_kda = @team2_kda = 0.0
       @game_info.participants.each_with_index do |participant, index|
         player = Player.find_by(name: participant.summoner_name)
         @player_service.get_statistics(player) if player.winrate == nil
@@ -60,12 +61,13 @@ class GamesController < ApplicationController
         case index
         when 0..4
           @team1_winrate += player.winrate
+          @team1_kda += player.kda
         when 5..9
           @team2_winrate += player.winrate
+          @team2_kda += player.kda
         end
       end
-      @team1_winrate /= 5.0
-      @team2_winrate /= 5.0
+      @team1_winrate, @team2_winrate, @team1_kda, @team2_kda = [@team1_winrate, @team2_winrate, @team1_kda, @team2_kda].map! { |x| x /= 5.0 }
       @game.result ||= [@team1_winrate, @team2_winrate].max * 100 / (@team1_winrate + @team2_winrate)
       @game.winner ||= @team1_winrate > @team2_winrate ? 1 : 2
       @game.save

@@ -23,10 +23,10 @@ class PlayersController < ApplicationController
   def create
     unless Player.exists?(name: player_params[:name], region: player_params[:region])
       @player = Player.new(player_params) 
+      @player_service.get_statistics(@player, true)
     else
       @player = Player.find_by(name: player_params[:name], region: player_params[:region])
     end
-    @player_service.get_statistics(@player, true)
     
     respond_to do |format|
       if @player.save
@@ -41,7 +41,6 @@ class PlayersController < ApplicationController
 
   def update
     @player_service.get_statistics(@player, true)
-    @player.save
     render :show
   end
 

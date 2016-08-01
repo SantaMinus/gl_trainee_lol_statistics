@@ -34,15 +34,8 @@ class LolPlayerService
     end
 
     len = games.count
-    @player.kills = avg(k.to_f, len)
-    @player.deaths = avg(d.to_f, len)
-    @player.assists = avg(a.to_f, len)
+    @player.kills, @player.deaths, @player.assists = [k, d, a].map! { |x| x /= len }
     @player.kda += (@player.kills + @player.assists) / @player.deaths
-    @player.save
-  end
-
-  def avg(value, count)
-    value / count
   end
 
   def get_statistics(player, new_player=true)
@@ -51,5 +44,43 @@ class LolPlayerService
     set_summoner_id
     count_winrate
     count_kda
+    count_skill_points
+    @player.save
+  end
+
+  def count_skill_points
+    entries = @client.league.get(@player.summoner_id).entries[0][1][0]
+    league_entry = entries.entries.find { |entry| entry.player_or_team_name == @player.name }
+    division = league_entry.division
+    lp = league_entry.league_points
+    tier = entries.tier
+    @player.skill_points = 0
+    case tier
+    when "SILVER"
+      @player.skill_points += 500
+    when "GOLD"
+      @player.skill_points += 1000
+    when "PLATINUM"
+      @player.skill_points += 1500
+    when "DIAMOND"
+      @player.skill_points += 2000
+    when "MASTER"
+      @player.skill_points += 2500
+    when "CHALLENGER"
+      @player.skill_points += 3000
+    end
+
+    case "division"
+    when "IV"
+      @player.skill_points += 100
+    when "III"
+      @player.skill_points += 200
+    when "II"
+      @player.skill_points += 300
+    when "I"
+      @player.skill_points += 400
+    end
+
+    @player.skill_points += lp
   end
 end
