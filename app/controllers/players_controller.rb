@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
   end
 
   def show
-    @player_service.get_statistics(@player, true) if @player.kda == nil
+    @player_service.get_statistics(@player, true) if @player.kda.nil?
   end
 
   def new
@@ -21,13 +21,13 @@ class PlayersController < ApplicationController
   end
 
   def create
-    unless Player.exists?(name: player_params[:name], region: player_params[:region])
-      @player = Player.new(player_params) 
-      @player_service.get_statistics(@player, true)
-    else
+    if Player.exists?(name: player_params[:name], region: player_params[:region])
       @player = Player.find_by(name: player_params[:name], region: player_params[:region])
+    else
+      @player = Player.new(player_params)
+      @player_service.get_statistics(@player)
     end
-    
+
     respond_to do |format|
       if @player.save
         format.html { redirect_to @player, notice: 'Player was created.' }
@@ -40,7 +40,7 @@ class PlayersController < ApplicationController
   end
 
   def update
-    @player_service.get_statistics(@player, true)
+    @player_service.get_statistics(@player)
     render :show
   end
 

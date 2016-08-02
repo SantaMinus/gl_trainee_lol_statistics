@@ -10,15 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801093238) do
-
-  create_table "banned_champions", force: :cascade do |t|
-    t.integer  "champion_id"
-    t.integer  "team_id"
-    t.integer  "pick_turn"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
+ActiveRecord::Schema.define(version: 20160802135730) do
 
   create_table "games", force: :cascade do |t|
     t.string   "mode"
