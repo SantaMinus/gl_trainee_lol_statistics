@@ -33,3 +33,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Custom gems
 gem 'ruby-lol'
 gem 'bcrypt-ruby', '3.1.2'
+
+# heroku assets
+group :assets do
+  gem 'therubyracer'
+  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
+  gem 'uglifier'
+end
