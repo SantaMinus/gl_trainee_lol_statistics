@@ -11,13 +11,13 @@ class GamesController < ApplicationController
 
     @game.mode = @game_info.game_mode
     @game.start_time = @start_time
-    @game.save 
-      
+    @game.save
+    
     @game_info.participants.each do |participant|
       player = if Player.exists?(name: participant.summoner_name, region: @player.region)
                  Player.find_by(name: participant.summoner_name, region: @player.region) 
                else
-                 Player.create(name: participant.summoner_name, region: @player.region) 
+                 Player.create(name: participant.summoner_name, region: @player.region)
                end
       Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
     end
@@ -51,25 +51,31 @@ class GamesController < ApplicationController
     end
 
     def predict_victory
-      #p = Player.find(params[:id])
+      # p = Player.find(params[:id])
       @player_service = LolPlayerService.new(@player)
-      @team1_winrate = @team2_winrate = @team1_kda = @team2_kda = 0.0
+      @team1_winrate = @team2_winrate = @team1_kda = @team2_kda = @team1_skill_points = @team2_skill_points = 0.0
       @game_info.participants.each_with_index do |participant, index|
         player = Player.find_by(name: participant.summoner_name)
-        @player_service.get_statistics(player) if player.winrate == nil
+        @player_service.get_statistics(player) if player.skill_points.nil?
 
         case index
         when 0..4
           @team1_winrate += player.winrate
           @team1_kda += player.kda
+          @team1_skill_points += player.skill_points
         when 5..9
           @team2_winrate += player.winrate
           @team2_kda += player.kda
+          @team2_skill_points += player.skill_points
         end
       end
-      @team1_winrate, @team2_winrate, @team1_kda, @team2_kda = [@team1_winrate, @team2_winrate, @team1_kda, @team2_kda].map! { |x| x /= 5.0 }
-      @game.result ||= [@team1_winrate, @team2_winrate].max * 100 / (@team1_winrate + @team2_winrate)
-      @game.winner ||= @team1_winrate > @team2_winrate ? 1 : 2
+      @team1_winrate, @team2_winrate, @team1_kda, @team2_kda, @team1_skill_points, @team2_skill_points =
+        [@team1_winrate, @team2_winrate, @team1_kda, @team2_kda, @team1_skill_points, @team2_skill_points].map! { |x| x / 5.0 }
+      team1_total = @team1_winrate * 20 + @team1_kda + @team1_skill_points * 0.01
+      team2_total = @team2_winrate * 20 + @team2_kda + @team2_skill_points * 0.01
+
+      @game.result ||= [team1_total, team2_total].max / (team1_total + team2_total) * 100
+      @game.winner ||= team1_total > team2_total ? 1 : 2
       @game.save
     end
 end

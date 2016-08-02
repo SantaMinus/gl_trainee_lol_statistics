@@ -13,8 +13,8 @@ class LolPlayerService
 
   def set_summoner_id
     @player.summoner_id ||= @client.summoner.by_name(@player.name).first.id
-    rescue
-      #flash.now[:error] = "The summoner with such name doesn't exist. Please double check the summoner's name or a region."
+  rescue Lol::NotFound
+    # flash.now[:error] = "The summoner with such name doesn't exist. Please double check the summoner's name or a region."
   end
 
   def count_winrate
@@ -34,13 +34,13 @@ class LolPlayerService
     end
 
     len = games.count
-    @player.kills, @player.deaths, @player.assists = [k, d, a].map! { |x| x /= len }
+    @player.kills, @player.deaths, @player.assists = [k, d, a].map! { |x| x / len }
     @player.kda += (@player.kills + @player.assists) / @player.deaths
   end
 
-  def get_statistics(player, new_player=true)
+  def get_statistics(player)
     @player = player
-    client_connect(@player.region) if new_player
+    client_connect(@player.region)
     set_summoner_id
     count_winrate
     count_kda
@@ -51,36 +51,42 @@ class LolPlayerService
   def count_skill_points
     entries = @client.league.get(@player.summoner_id).entries[0][1][0]
     league_entry = entries.entries.find { |entry| entry.player_or_team_name == @player.name }
+
     division = league_entry.division
     lp = league_entry.league_points
     tier = entries.tier
     @player.skill_points = 0
+
     case tier
-    when "SILVER"
+    when 'SILVER'
       @player.skill_points += 500
-    when "GOLD"
+    when 'GOLD'
       @player.skill_points += 1000
-    when "PLATINUM"
+    when 'PLATINUM'
       @player.skill_points += 1500
-    when "DIAMOND"
+    when 'DIAMOND'
       @player.skill_points += 2000
-    when "MASTER"
+    when 'MASTER'
       @player.skill_points += 2500
-    when "CHALLENGER"
+    when 'CHALLENGER'
       @player.skill_points += 3000
     end
 
-    case "division"
-    when "IV"
+    case division
+    when 'IV'
       @player.skill_points += 100
-    when "III"
+    when 'III'
       @player.skill_points += 200
-    when "II"
+    when 'II'
       @player.skill_points += 300
-    when "I"
+    when 'I'
       @player.skill_points += 400
     end
 
     @player.skill_points += lp
+
+  rescue Lol::NotFound
+    @player.skill_points = 0
+    # specify more accurate value
   end
 end
