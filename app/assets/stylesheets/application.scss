@@ -1,0 +1,49 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import url("normalize.css");
+
+.container-fluid {
+  width: 80%;
+}
+.jumbotron {
+  background-color: aliceblue;
+  letter-spacing: 1pt;
+  margin-bottom: 50pt;
+  opacity: 0.8;
+  text-align: center;
+}
+p {
+  line-height: 1.5;
+}
+.content {
+  background-color: aliceblue;
+  letter-spacing: 1pt;
+  opacity: 0.8;
+  margin-top: 50pt;
+  padding-top: 20pt;
+  text-align: center;
+}
+.players-show {
+  margin-top: 30pt;
+}
+footer {
+  bottom: 0;
+  font-size: 80%;
+  height: 20pt;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}

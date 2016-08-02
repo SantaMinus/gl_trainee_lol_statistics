@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Banned Champions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Champion</th>
+      <th>Team</th>
+      <th>Pick turn</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @banned_champions.each do |banned_champion| %>
+      <tr>
+        <td><%= banned_champion.champion_id %></td>
+        <td><%= banned_champion.team_id %></td>
+        <td><%= banned_champion.pick_turn %></td>
+        <td><%= link_to 'Show', banned_champion %></td>
+        <td><%= link_to 'Edit', edit_banned_champion_path(banned_champion) %></td>
+        <td><%= link_to 'Destroy', banned_champion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Banned Champion', new_banned_champion_path %>
