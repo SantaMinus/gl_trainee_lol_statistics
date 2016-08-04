@@ -1,0 +1,19 @@
+= form_for(player) do |f|
+  - if player.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(player.errors.count, "error")
+        prohibited this player from being saved:
+      %ul
+        - player.errors.full_messages.each do |message|
+          %li= message
+  %form
+    .form-group
+      %label Summoner's name
+      = f.text_field :name, class: 'form-control', placeholder: "Summoner's name"
+    .form-group
+      %label Region
+      %br/
+      = f.select(:region, options_for_select(Player::REGIONS))
+    .form-group.actions
+      = f.submit(class: 'btn btn-primary btn')

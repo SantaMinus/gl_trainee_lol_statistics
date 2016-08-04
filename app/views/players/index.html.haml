@@ -1,0 +1,22 @@
+%h1 Players
+.container
+  .row
+    .table-responsive
+      %table.table.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Winrate
+            %th KDA
+            %th Skill points
+        %tbody
+          - @players.each do |player|
+            %tr
+              %td= link_to player.name, player
+              %td= player.winrate.round(2) if player.winrate
+              %td= player.kda.round(2) if player.kda
+              %td= player.skill_points
+    .col-md-12.text-center
+      %ul#myPager.pagination.pagination-lg.pager
+= link_to 'New Player', new_player_path
+= will_paginate @players

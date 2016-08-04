@@ -2,12 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
+  div.table-responsive { min-height: 600px; }
   table {
     border-style: solid;
     border-width: 1pt;
   }
-  h1 {
-    text-align: center
+  div.players-show-header {
+    padding-bottom: 10pt;
+      a.live-game {
+        margin: 0 0 10pt 30pt;
+      }
+    h1 {
+      display: inline-block;
+      text-align: center
+    }
   }
 }
-.table-responsive { height: 600px; }
