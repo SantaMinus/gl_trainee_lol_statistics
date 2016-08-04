@@ -15,55 +15,55 @@
  */
  @import 'normalize';
 
-.container-fluid {
-  width: 80%;
-  div.content {
-    background-color: aliceblue;
-    letter-spacing: 1pt;
-    opacity: 0.8;
-    margin-top: 50pt;
-    padding-top: 20pt;
-    text-align: center;
-    div.jumbotron {
+body {
+  background-image: url(bg-default.jpg);
+  .container-fluid {
+    width: 80%;
+    div.content {
       background-color: aliceblue;
       letter-spacing: 1pt;
-      margin-bottom: 50pt;
       opacity: 0.8;
+      margin-top: 50pt;
+      padding-top: 20pt;
       text-align: center;
-      p {
-        line-height: 1.5;
-      }
-    }
-
-    form {
-      width: 60%;  
-      margin: auto;
-      input, select {
+      div.jumbotron {
+        background-color: aliceblue;
+        letter-spacing: 1pt;
+        margin-bottom: 50pt;
+        opacity: 0.8;
         text-align: center;
+        p {
+          line-height: 1.5;
+        }
       }
-      select {
-        width: 100%
+      form {
+        width: 60%;  
+        margin: auto;
+        input, select {
+          text-align: center;
+        }
+        select {
+          width: 100%
+        }
       }
-    }
-
-    a {
-      &.back {
-        display: inline-block;
-        margin: 10pt;
+      a {
+        &.back {
+          display: inline-block;
+          margin: 10pt;
+        }
       }
-    }
-    .btn:visited {
-      color: white;
+      .btn:visited {
+        color: white;
+      }
     }
   }
+  footer {
+    bottom: 0;
+    color: white;
+    font-size: 80%;
+    height: 20pt;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
 }
-
-footer {
-  font-size: 80%;
-  height: 20pt;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-}
-
-

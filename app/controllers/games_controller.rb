@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
+  # shows a game if it's in a DB, if not - creates. If the player is not in game, renders a message.
   def show
     @player = Player.find(params[:id])
     @game_request = Lol::CurrentGameRequest.new(Player::API_KEY, @player.region)
@@ -27,32 +28,35 @@ class GamesController < ApplicationController
 
   private
 
+    # converts a region into a platform to find the game on RIOT server
     def get_platform(region)
       platform = region.upcase
       platform << '1' unless region.in? ['kr', 'ru']
       platform
     end
 
-  def create_game
-    @game = Game.new
+    # creates a record in the DB if the game exists
+    def create_game
+      @game = Game.new
 
-    @game.mode = @game_info.game_mode
-    @game.start_time = @start_time
-    @game.save
-    
-    @game_info.participants.each do |participant|
-      player = if Player.exists?(name: participant.summoner_name, region: @player.region)
-                 Player.find_by(name: participant.summoner_name, region: @player.region) 
-               else
-                 Player.create(name: participant.summoner_name, region: @player.region)
-               end
-      Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
+      @game.mode = @game_info.game_mode
+      @game.start_time = @start_time
+      @game.save
+      
+      @game_info.participants.each do |participant|
+        player = if Player.exists?(name: participant.summoner_name, region: @player.region)
+                   Player.find_by(name: participant.summoner_name, region: @player.region) 
+                 else
+                   Player.create(name: participant.summoner_name, region: @player.region)
+                 end
+        Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
+      end
+      predict_victory
+    #rescue Lol::TooManyRequests
+      #flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
     end
-    predict_victory
-  #rescue Lol::TooManyRequests
-    #flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
-  end
 
+    # makes victory prediction based on winrate&KDA. Skill points are to be added.
     def predict_victory
       # p = Player.find(params[:id])
       @player_service = LolPlayerService.new(@player)
