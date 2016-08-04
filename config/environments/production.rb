@@ -86,5 +86,4 @@ Rails.application.configure do
 
   # Custom code goes here:
   config.assets.precompile += %w[*.png *.jpg *.jpeg *.gif] 
-  image-path("bg-default.jpg")
 end
