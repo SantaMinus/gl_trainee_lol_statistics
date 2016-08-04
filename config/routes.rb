@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  get 'games/create'
-  get 'games/show'
 
   get "/pages/:page" => "pages#show"
-  get "player/:id/update" => "players#update", :as => :update_player
-  resources :games
-  resources :players
+  resources :games, only: [:index, :show]
+  resources :players, except: [:edit, :update] do
+    member do
+      get 'update' => "players#update_player", :as => :update
+    end
+  end
+  #get "players/:id/update" => "players#update_player", :as => :update_player
 
   root "pages#show", page: "home"
 end

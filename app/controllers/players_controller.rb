@@ -2,22 +2,19 @@
 require 'lol'
 
 class PlayersController < ApplicationController
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_action :set_player, only: [:show, :edit, :update_player, :destroy]
   before_action :set_service, except: [:index, :new, :destroy]
 
   def index
-    @players = Player.all
+    @players = Player.paginate(page: params[:page], per_page: 20)
   end
 
   def show
-    @player_service.get_statistics(@player, true) if @player.kda.nil?
+    @player_service.get_statistics(@player) if @player.skill_points.nil?
   end
 
   def new
     @player = Player.new
-  end
-
-  def edit
   end
 
   def create
@@ -39,7 +36,8 @@ class PlayersController < ApplicationController
     end
   end
 
-  def update
+  # GET /players/:id/update
+  def update_player
     @player_service.get_statistics(@player)
     render :show
   end
@@ -53,6 +51,7 @@ class PlayersController < ApplicationController
   end
 
   private
+  
     def set_player
       @player = Player.find(params[:id])
     end

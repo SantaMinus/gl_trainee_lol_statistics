@@ -1,11 +1,9 @@
-<table class="table table-striped players-show">
-  <thead>
-    <tr>
-      <th><%= @player.name %>'s statistics</th>
-      <th><%= link_to 'Live game', game_path(@player) %><button type="button" class="btn btn-info" disabled="disabled">Live game</button></th>
-    </tr>
-  </thead>
+<div class='players-show-header'>
+  <h1><%= @player.name %>'s statistics</h1>
+  <%= link_to 'Live game', game_path(@player), class: 'btn btn-info btn-lg live-game' %>
+</div>
 
+<table class="table table-striped players-show">
   <tr>
     <td><strong>Name:</strong></td>
     <td><%= @player.name %></td>
@@ -18,7 +16,7 @@
 
   <tr>
     <td><strong>Win Rate:</strong></td>
-    <td><%= @player.winrate.round(2) %></td>
+    <td><%= (@player.winrate * 100).round(2) %>%</td>
   </tr>
 
   <tr>
@@ -42,8 +40,6 @@
   </tr>
 </table>
 
-<%= link_to "Update", :controller => :players, :action => :update, :type => '1', :html => { :class => "btn" } %> |
-<%= link_to 'Back', root_path %> |
-<%= link_to 'Destroy', @player, method: :delete, data: { confirm: 'Are you sure?' } %>
-
-<%= button_to('Update statistics', :action => :update, :class => 'btn btn-info')  %>
+<%= link_to "Update", update_player_path(@player), class: "btn btn-primary btn-sm" %>
+<%= link_to 'Back', root_path, class: 'btn btn-primary btn-sm back' %>
+<%= link_to 'Destroy', @player, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>

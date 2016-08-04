@@ -11,19 +11,20 @@
     </div>
   <% end %>
   
-  <table class="table">
-    <tr class="field">
-      <td><%= f.label :name %></td>
-      <td><%= f.text_field :name %></td>
-    </tr>
+  <form>
+    <div class="form-group">
+      <label>Summoner's name</label>
+      <%= f.text_field :name, class: 'form-control', placeholder: "Summoner's name" %>
+    </div>
 
-    <tr class="field">
-      <td><%= f.label :region %></td>
-      <td><%= f.select(:region, options_for_select([['Russia', "ru"], ['EU Nordic & East', 'eun'], ['EU West', 'euw'], ['North America', 'na'], ['Latin America North', 'la1'], ['Latin America South', 'la2'], ['Brazil', 'br'], ['Japan', 'jp'], ['Turkey', 'tr'], ["Oceania", 'oc'], ['Republic of Korea', 'kr']])) %></td>
-    </tr>
+    <div class="form-group">
+     <label>Region</label>
+     <br>
+      <%= f.select(:region, options_for_select(Player::REGIONS)) %>
+    </div>
 
-    <tr class="actions">
-      <%= f.submit %>
-    </tr>
-  </table>
+    <div class="form-group actions">
+      <%= f.submit(class: 'btn btn-primary btn') %>
+    </div>
+  </form>
 <% end %>

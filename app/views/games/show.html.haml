@@ -1,0 +1,45 @@
+.content
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+          = @player.name
+          's current game
+    %tr
+      %td
+        %strong Mode:
+      %td= @game.mode
+    %tr
+      %td
+        %strong Start time:
+      %td= @game.start_time
+    %tr
+      %th Team 1
+      %th Team 2
+    %tr
+      %td= link_to @game.participants[0].player.name,  @game.participants[0].player
+      %td= link_to @game.participants[5].player.name,  @game.participants[5].player
+    %tr
+      %td= link_to @game.participants[1].player.name,  @game.participants[1].player
+      %td= link_to @game.participants[6].player.name,  @game.participants[6].player
+    %tr
+      %td= link_to @game.participants[2].player.name,  @game.participants[2].player
+      %td= link_to @game.participants[7].player.name,  @game.participants[7].player
+    %tr
+      %td= link_to @game.participants[3].player.name,  @game.participants[3].player
+      %td= link_to @game.participants[8].player.name,  @game.participants[8].player
+    %tr
+      %td= link_to @game.participants[4].player.name,  @game.participants[4].player
+      %td= link_to @game.participants[9].player.name,  @game.participants[9].player
+    %tr
+      %th Winrate
+      %th
+    %tr
+      %td= @team1_winrate.round(2)
+      %td= @team2_winrate.round(2)
+    %tr.prediction
+      %th
+        Team #{@game.winner} is likely to win with a chance of #{@game.result.round(2)}%
+      %th
+  .btn-group
+    = link_to 'Back', player_path, class: 'btn btn-primary btn-sm back'

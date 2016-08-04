@@ -6,7 +6,34 @@ class GamesController < ApplicationController
     @games = Game.all
   end
 
-  def create
+  def show
+    @player = Player.find(params[:id])
+    @game_request = Lol::CurrentGameRequest.new(Player::API_KEY, @player.region)
+    begin
+      @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
+    rescue
+      render :game_not_found
+    else
+      @start_time = Time.at(@game_info.game_start_time.to_s[0..9].to_i)
+
+      if Game.exists?(start_time: @start_time)
+        @game = Game.find_by(start_time: @start_time)
+      else
+        create_game
+      end
+      predict_victory
+    end
+  end
+
+  private
+
+    def get_platform(region)
+      platform = region.upcase
+      platform << '1' unless region.in? ['kr', 'ru']
+      platform
+    end
+
+  def create_game
     @game = Game.new
 
     @game.mode = @game_info.game_mode
@@ -22,38 +49,15 @@ class GamesController < ApplicationController
       Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
     end
     predict_victory
+  #rescue Lol::TooManyRequests
+    #flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
   end
-
-  def show
-    @player = Player.find(params[:id])
-    @game_request = Lol::CurrentGameRequest.new(Player::API_KEY, @player.region)
-    begin
-      @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
-    rescue
-      render :game_not_found
-    else
-      @start_time = Time.at(@game_info.game_start_time).to_datetime
-
-      if Game.exists?(start_time: @start_time)
-        @game = Game.find_by(start_time: @start_time)
-      else
-        create
-      end
-      predict_victory
-    end
-  end
-
-  private
-    def get_platform(region)
-      platform = region.upcase
-      platform << '1' unless region.in? ['kr', 'ru']
-      platform
-    end
 
     def predict_victory
       # p = Player.find(params[:id])
       @player_service = LolPlayerService.new(@player)
       @team1_winrate = @team2_winrate = @team1_kda = @team2_kda = @team1_skill_points = @team2_skill_points = 0.0
+
       @game_info.participants.each_with_index do |participant, index|
         player = Player.find_by(name: participant.summoner_name)
         @player_service.get_statistics(player) if player.skill_points.nil?

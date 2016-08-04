@@ -13,37 +13,57 @@
  *= require_tree .
  *= require_self
  */
- @import url("normalize.css");
+ @import 'normalize';
 
 .container-fluid {
   width: 80%;
+  div.content {
+    background-color: aliceblue;
+    letter-spacing: 1pt;
+    opacity: 0.8;
+    margin-top: 50pt;
+    padding-top: 20pt;
+    text-align: center;
+    div.jumbotron {
+      background-color: aliceblue;
+      letter-spacing: 1pt;
+      margin-bottom: 50pt;
+      opacity: 0.8;
+      text-align: center;
+      p {
+        line-height: 1.5;
+      }
+    }
+
+    form {
+      width: 60%;  
+      margin: auto;
+      input, select {
+        text-align: center;
+      }
+      select {
+        width: 100%
+      }
+    }
+
+    a {
+      &.back {
+        display: inline-block;
+        margin: 10pt;
+      }
+    }
+    .btn:visited {
+      color: white;
+    }
+  }
 }
-.jumbotron {
-  background-color: aliceblue;
-  letter-spacing: 1pt;
-  margin-bottom: 50pt;
-  opacity: 0.8;
-  text-align: center;
-}
-p {
-  line-height: 1.5;
-}
-.content {
-  background-color: aliceblue;
-  letter-spacing: 1pt;
-  opacity: 0.8;
-  margin-top: 50pt;
-  padding-top: 20pt;
-  text-align: center;
-}
-.players-show {
-  margin-top: 30pt;
-}
+
 footer {
-  bottom: 0;
   font-size: 80%;
   height: 20pt;
   position: absolute;
   text-align: center;
   width: 100%;
 }
+
+
