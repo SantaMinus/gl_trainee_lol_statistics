@@ -3,6 +3,7 @@
     = @player.name
     's statistics
   = link_to 'Live game', game_path(@player), class: 'btn btn-info btn-lg live-game'
+  %p#notice= notice
 %table.table.table-striped.players-show
   %tr
     %td

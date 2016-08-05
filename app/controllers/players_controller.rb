@@ -11,6 +11,8 @@ class PlayersController < ApplicationController
 
   def show
     @player_service.get_statistics(@player) if @player.skill_points.nil?
+  rescue Lol::TooManyRequests
+    flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
   end
 
   def new
@@ -34,12 +36,17 @@ class PlayersController < ApplicationController
         format.json { render json: @player.errors, status: :unprocessable_entity }
       end
     end
+  rescue
+    render :summoner_not_found
   end
 
   # GET /players/:id/update
   def update_player
     @player_service.get_statistics(@player)
     render :show
+  rescue
+    binding.pry
+    flash.now[:error] = "The summoner with such name doesn't exist. Please double check the summoner's name or a region."
   end
 
   def destroy

@@ -10,20 +10,21 @@ class GamesController < ApplicationController
   def show
     @player = Player.find(params[:id])
     @game_request = Lol::CurrentGameRequest.new(Player::API_KEY, @player.region)
-    begin
-      @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
-    rescue
-      render :game_not_found
-    else
-      @start_time = Time.at(@game_info.game_start_time.to_s[0..9].to_i)
+    @game_info = @game_request.spectator_game_info(get_platform(@player.region), @player.summoner_id)
 
-      if Game.exists?(start_time: @start_time)
-        @game = Game.find_by(start_time: @start_time)
-      else
-        create_game
-      end
-      predict_victory
+    @start_time = Time.at(@game_info.game_start_time.to_s[0..9].to_i)
+
+    if Game.exists?(start_time: @start_time)
+      @game = Game.find_by(start_time: @start_time)
+    else
+      create_game
     end
+    predict_victory
+
+    rescue Lol::TooManyRequests
+      flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
+    rescue Lol::NotFound
+      render :game_not_found
   end
 
   private
@@ -52,28 +53,33 @@ class GamesController < ApplicationController
         Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
       end
       predict_victory
-    #rescue Lol::TooManyRequests
-      #flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
+
+    rescue Lol::TooManyRequests
+      redirect_to :back, :flash => { :error => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
+    rescue Lol::NotFound
+      binding.pry
+      return
     end
 
     # makes victory prediction based on winrate&KDA. Skill points are to be added.
     def predict_victory
-      # p = Player.find(params[:id])
       @player_service = LolPlayerService.new(@player)
       @team1_winrate = @team2_winrate = @team1_kda = @team2_kda = @team1_skill_points = @team2_skill_points = 0.0
 
       @game_info.participants.each_with_index do |participant, index|
         player = Player.find_by(name: participant.summoner_name)
+        player = Player.create(name: participant.summoner_name, region: @player.region) unless player
+
         @player_service.get_statistics(player) if player.skill_points.nil?
 
         case index
         when 0..4
-          @team1_winrate += player.winrate
-          @team1_kda += player.kda
+          @team1_winrate += player.winrate || 0
+          @team1_kda += player.kda || 0
           @team1_skill_points += player.skill_points
         when 5..9
-          @team2_winrate += player.winrate
-          @team2_kda += player.kda
+          @team2_winrate += player.winrate || 0
+          @team2_kda += player.kda || 0
           @team2_skill_points += player.skill_points
         end
       end
