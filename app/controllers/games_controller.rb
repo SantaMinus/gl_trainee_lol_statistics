@@ -22,7 +22,7 @@ class GamesController < ApplicationController
     predict_victory
 
     rescue Lol::TooManyRequests
-      flash.now[:error] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
+      flash.now[:notice] = "Unfortunately, the application has met a RIOT server rate limit. Please refresh this page once more."
     rescue Lol::NotFound
       render :game_not_found
   end
@@ -55,10 +55,7 @@ class GamesController < ApplicationController
       predict_victory
 
     rescue Lol::TooManyRequests
-      redirect_to :back, :flash => { :error => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
-    rescue Lol::NotFound
-      binding.pry
-      return
+      redirect_to :back, :flash => { :notice => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
     end
 
     # makes victory prediction based on winrate&KDA. Skill points are to be added.
