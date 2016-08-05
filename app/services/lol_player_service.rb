@@ -15,8 +15,6 @@ class LolPlayerService
   # gets Summoner ID from RIOT server and sets it to a player
   def set_summoner_id
     @player.summoner_id ||= @client.summoner.by_name(@player.name).first.id
-  rescue Lol::NotFound
-    # flash.now[:error] = "The summoner with such name doesn't exist. Please double check the summoner's name or a region."
   end
 
   # counts player's winrate
@@ -93,6 +91,5 @@ class LolPlayerService
 
   rescue Lol::NotFound
     @player.skill_points = 0
-    # specify more accurate value
   end
 end
