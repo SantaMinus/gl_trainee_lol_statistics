@@ -1,0 +1,16 @@
+<Lol::Game: 
+@game_id=104684767, 
+@invalid=false, 
+@game_mode="CLASSIC", 
+@game_type="MATCHED_GAME", 
+@sub_type="NORMAL", 
+@map_id=11, 
+@team_id=100, 
+@champion_id=267, 
+@spell1=3, 
+@spell2=4, 
+@level=30, 
+@ip_earned=87, 
+@create_date=2016-07-09 22:31:45 +0300, 
+@fellow_players=[<Lol::Player: @summoner_id=3920565, @team_id=200, @champion_id=23>, <Lol::Player: @summoner_id=516835, @team_id=200, @champion_id=420>, <Lol::Player: @summoner_id=134160, @team_id=100, @champion_id=245>, <Lol::Player: @summoner_id=3370645, @team_id=200, @champion_id=157>, <Lol::Player: @summoner_id=295305, @team_id=100, @champion_id=13>, <Lol::Player: @summoner_id=471701, @team_id=200, @champion_id=222>, <Lol::Player: @summoner_id=3210631, @team_id=100, @champion_id=21>, <Lol::Player: @summoner_id=945452, @team_id=200, @champion_id=19>, <Lol::Player: @summoner_id=3578170, @team_id=100, @champion_id=120>], 
+@stats=#<OpenStruct level=17, gold_earned=14955, num_deaths=14, turrets_killed=1, minions_killed=65, champions_killed=2, gold_spent=13495, total_damage_dealt=29529, total_damage_taken=43043, team=100, win=false, largest_multi_kill=1, physical_damage_dealt_player=9928, magic_damage_dealt_player=19601, physical_damage_taken=36879, magic_damage_taken=4854, largest_critical_strike=105, time_played=3017, total_heal=12511, total_units_healed=5, assists=28, item0=3190, item1=2045, item2=3092, item3=3116, item4=3117, item5=3050, item6=3341, magic_damage_dealt_to_champions=9711, physical_damage_dealt_to_champions=2614, total_damage_dealt_to_champions=12325, true_damage_taken=1309, ward_killed=53, ward_placed=23, total_time_crowd_control_dealt=247, player_role=2, player_position=4, total_damage_dealt_to_buildings=1681, vision_wards_bought=1>

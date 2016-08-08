@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Used RIOT API: https://developer.riotgames.com/
 
-Things you may want to cover:
+Used [mikamai's gem 'ruby-lol'](https://github.com/mikamai/ruby-lol)
 
-* Ruby version
+Patch note
+------
+v0.1.0 - App creation with a simple authentication and winrate calculating
 
-* System dependencies
+v0.2.0 - Added KDA calculation
 
-* Configuration
+v0.2.1 - Update player_controller methods to look better.
 
-* Database creation
+v0.2.2 - Refactored player\_controller, added lol\_player_service, added Bootstrap
 
-* Database initialization
+v0.2.3 - Cleaned up structure a bit
 
-* How to run the test suite
+v0.3.0 - Added current game basic statistics
 
-* Services (job queues, cache servers, search engines, etc.)
+v0.4.0 - Added a simple prediction of current game result
 
-* Deployment instructions
+v0.4.1 - Modified routes and styles
 
-* ...
+v0.4.2 - Fixed GUI, cleared structure, fixed routes

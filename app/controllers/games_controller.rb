@@ -53,6 +53,7 @@ class GamesController < ApplicationController
         Participant.create(game_id: @game.id, player_id: player.id) unless Participant.exists?(game_id: @game.id, player_id: player.id)
       end
       predict_victory
+      binding.pry
 
     rescue Lol::TooManyRequests
       redirect_to :back, :flash => { :notice => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }

@@ -1,0 +1,29 @@
+
+[1mFrom:[0m /home/katerynasavina/Documents/git/lolstat/app/controllers/players_controller.rb @ line 29 PlayersController#create:
+
+    [1;34m23[0m: [32mdef[0m [1;34mcreate[0m
+    [1;34m24[0m:   [32munless[0m [1;34;4mPlayer[0m.exists?([35mname[0m: player_params[[33m:name[0m], [35mregion[0m: player_params[[33m:region[0m])
+    [1;34m25[0m:     @player = [1;34;4mPlayer[0m.new(player_params) 
+    [1;34m26[0m:   [32melse[0m
+    [1;34m27[0m:     @player = [1;34;4mPlayer[0m.find_by([35mname[0m: player_params[[33m:name[0m], [35mregion[0m: player_params[[33m:region[0m])
+    [1;34m28[0m:   [32mend[0m
+ => [1;34m29[0m:   binding.pry
+    [1;34m30[0m:   [32mbegin[0m
+    [1;34m31[0m:     @player_service.set_summoner_id
+    [1;34m32[0m:   [32mrescue[0m
+    [1;34m33[0m:     flash.now[[33m:error[0m] = [31m[1;31m"[0m[31mThe summoner with such name doesn't exist. Please double check the summoner's name or a region.[1;31m"[0m[31m[0m
+    [1;34m34[0m:   [32melse[0m
+    [1;34m35[0m:     @player_service.get_statistics(@player, [1;36mtrue[0m)
+    [1;34m36[0m:   [32mend[0m
+    [1;34m37[0m: 
+    [1;34m38[0m:   respond_to [32mdo[0m |format|
+    [1;34m39[0m:     [32mif[0m @player.save
+    [1;34m40[0m:       format.html { redirect_to @player, [35mnotice[0m: [31m[1;31m'[0m[31mPlayer was created.[1;31m'[0m[31m[0m }
+    [1;34m41[0m:       format.json { render [33m:show[0m, [35mstatus[0m: [33m:created[0m, [35mlocation[0m: @player }
+    [1;34m42[0m:     [32melse[0m
+    [1;34m43[0m:       format.html { render [33m:new[0m }
+    [1;34m44[0m:       format.json { render [35mjson[0m: @player.errors, [35mstatus[0m: [33m:unprocessable_entity[0m }
+    [1;34m45[0m:     [32mend[0m
+    [1;34m46[0m:   [32mend[0m
+    [1;34m47[0m: [32mend[0m
+

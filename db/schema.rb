@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20160802135845) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.string   "mode"
     t.datetime "start_time"
@@ -39,10 +42,6 @@ ActiveRecord::Schema.define(version: 20160802135845) do
     t.decimal  "kda"
     t.integer  "summoner_id"
     t.integer  "skill_points"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "name"
   end
 
 end
