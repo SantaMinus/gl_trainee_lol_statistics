@@ -55,6 +55,7 @@ class GamesController < ApplicationController
       predict_victory
 
     rescue Lol::TooManyRequests
+      # TODO: make flash work!
       redirect_to :back, :flash => { :notice => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
     end
 
@@ -73,11 +74,11 @@ class GamesController < ApplicationController
         when 0..4
           @team1_winrate += player.winrate || 0
           @team1_kda += player.kda || 0
-          @team1_skill_points += player.skill_points
+          @team1_skill_points += player.skill_points || 0
         when 5..9
           @team2_winrate += player.winrate || 0
           @team2_kda += player.kda || 0
-          @team2_skill_points += player.skill_points
+          @team2_skill_points += player.skill_points || 0
         end
       end
       @team1_winrate, @team2_winrate, @team1_kda, @team2_kda, @team1_skill_points, @team2_skill_points =

@@ -47,7 +47,7 @@ class LolPlayerService
     set_summoner_id
     count_winrate
     count_kda
-    count_skill_points
+    #count_skill_points # ruby-lol gem has been broken
     @player.save
   end
 
