@@ -25,7 +25,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Custom gems
-gem 'ruby-lol'
+gem 'ruby-lol', :git => 'https://github.com/mikamai/ruby-lol'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'will_paginate', '~> 3.1.0'
 gem 'haml-rails', '~> 0.9'

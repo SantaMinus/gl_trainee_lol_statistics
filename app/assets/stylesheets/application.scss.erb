@@ -20,14 +20,14 @@ body {
   .container-fluid {
     width: 80%;
     div.content {
-      background-color: aliceblue;
+      background-color: #FFF7DE;
       letter-spacing: 1pt;
       opacity: 0.8;
       margin-top: 50pt;
       padding-top: 20pt;
       text-align: center;
       div.jumbotron {
-        background-color: aliceblue;
+        background-color: #FFF7DE;
         letter-spacing: 1pt;
         margin-bottom: 50pt;
         opacity: 0.8;
@@ -52,8 +52,19 @@ body {
           margin: 10pt;
         }
       }
-      .btn:visited {
-        color: white;
+      .btn-primary {
+        background-color: #FFB700;
+      }
+      .btn-info {
+        background-color: #3A81CE;
+      }
+      .btn-sm, .btn-lg {
+        border-color: black;  
+        color: black;
+        width: 100pt;
+      }
+      .btn:hover {
+        color: #331400;
       }
     }
   }
@@ -65,5 +76,6 @@ body {
     position: absolute;
     text-align: center;
     width: 100%;
+    z-index: -1
   }
 }

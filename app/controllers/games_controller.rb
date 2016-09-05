@@ -54,9 +54,9 @@ class GamesController < ApplicationController
       end
       predict_victory
 
-    rescue Lol::TooManyRequests
+    #rescue Lol::TooManyRequests
       # TODO: make flash work!
-      redirect_to :back, :flash => { :notice => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
+      #redirect_to :back, :flash => { :notice => "Unfortunately, the application has met a service rate limit. Please refresh this page once more." }
     end
 
     # makes victory prediction based on winrate&KDA. Skill points are to be added.

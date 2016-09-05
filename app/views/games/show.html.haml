@@ -36,8 +36,8 @@
       %th Winrate
       %th
     %tr
-      //%td= @team1_winrate.round(2)
-      //%td= @team2_winrate.round(2)
+      %td= @team1_winrate.round(2)
+      %td= @team2_winrate.round(2)
     %tr.prediction
       %th
         Team #{@game.winner} is likely to win with a chance of #{@game.result}%
