@@ -88,6 +88,7 @@ class GamesController < ApplicationController
 
       @game.result ||= [team1_total, team2_total].max / (team1_total + team2_total) * 100
       @game.winner ||= team1_total > team2_total ? 1 : 2
+
       @game.save
     end
 end

@@ -40,7 +40,7 @@
       %td= @team2_winrate.round(2)
     %tr.prediction
       %th
-        Team #{@game.winner} is likely to win with a chance of #{@game.result}%
+        Team #{@game.winner} is likely to win with a chance of #{@game.result.round(2)}%
       %th
   .btn-group
     = link_to 'Back', player_path, class: 'btn btn-primary btn-sm back'
