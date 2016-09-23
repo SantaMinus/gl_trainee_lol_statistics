@@ -1,5 +1,7 @@
 # README
 
+[![Code Climate](https://codeclimate.com/github/SantaMinus/gl_trainee_lol_statistics/badges/gpa.svg)](https://codeclimate.com/github/SantaMinus/gl_trainee_lol_statistics)
+
 Used RIOT API: https://developer.riotgames.com/
 
 Used [mikamai's gem 'ruby-lol'](https://github.com/mikamai/ruby-lol)
